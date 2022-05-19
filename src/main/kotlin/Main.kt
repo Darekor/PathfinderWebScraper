@@ -5,8 +5,8 @@ const val PFSRD = "https://www.d20pfsrd.com"
 fun main() {
 
     collectFeatsInfo().forEach { println(it) }
-    collectRacesInfo().forEach { println(it) }
-    collectClassesInfo().forEach { println(it) }
+    //collectRacesInfo().forEach { println(it) }
+    //collectClassesInfo().forEach { println(it) }
 }
 
 private fun collectFeatsInfo():List<Feat> {
