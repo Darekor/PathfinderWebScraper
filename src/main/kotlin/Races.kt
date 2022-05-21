@@ -55,7 +55,6 @@ fun raceFromData(raceData: Document, raceName:String = ""):Race {
     val replacementFeatures: MutableList<RacialFeature> = mutableListOf()
     val favouredClassOptions: MutableList<FavouredClassOption> = mutableListOf()
 
-    //var t = raceData.select("div.article-content").html().split("(?=(<h3>.*?<\\/h3>))".toRegex())
     raceData.select("div.article-content").html().split("(?=(<h3>.*?</h3>))".toRegex())
         .map {Jsoup.parse(it)}
         .forEach {
@@ -67,7 +66,7 @@ fun raceFromData(raceData: Document, raceName:String = ""):Race {
                     it.select("li").forEach{
                         val features = """<b>(.*?)</b>:?(.*)""".toRegex().matchEntire(it.html())?.groupValues
                         if (features != null) {
-                          baseFeatures.add(RacialFeature(Jsoup.parse(features[1]).text(), mapOf(),Jsoup.parse(features[2]).text()))
+                          baseFeatures.add(RacialFeature(Jsoup.parse(features[1]).text(), mapOf(),Jsoup.parse(features[2]).text(), listOf(),FeatureTypes.RCL))
                         }
                         //val featureSplit = it.text().split(':')
                         //baseFeatures.add(RacialFeature(featureSplit[0], mapOf(),featureSplit[1]))
@@ -75,7 +74,7 @@ fun raceFromData(raceData: Document, raceName:String = ""):Race {
                 (it.text().startsWith("Alternate Racial Traits"))->
                     it.select("li").forEach{val features = """<b>(.*?)</b>:?(.*)""".toRegex().matchEntire(it.html())?.groupValues
                         if (features != null) {
-                            replacementFeatures.add(RacialFeature(Jsoup.parse(features[1]).text(), mapOf(),Jsoup.parse(features[2]).text()))
+                            replacementFeatures.add(RacialFeature(Jsoup.parse(features[1]).text(), mapOf(),Jsoup.parse(features[2]).text(),listOf(),FeatureTypes.RCL))
                         }
 
                     }

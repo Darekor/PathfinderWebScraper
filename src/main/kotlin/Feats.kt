@@ -66,10 +66,10 @@ private fun generatePrereqs(text: String) : MutableList<List<String>>
     val res = mutableListOf<List<String>>()
     text.skipFirst().replace(".", "").split(';').forEach{
         if (it.contains(", or"))
-            res.add(it.split(","," or ").filter { it.isNotEmpty()})
+            res.add(it.split(","," or ").filter { it.isNotEmpty()}.map { it.trim() })
         else
             it.split(",", ", and").forEach {
-                res.add(it.split(" or ").filter { it.isNotEmpty()})
+                res.add(it.split(" or ").filter{ it.isNotEmpty()}.map{ it.trim()})
             }
     }
     return res

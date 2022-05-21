@@ -61,7 +61,7 @@ fun classFromPage(classPage: Document): PClass {
     name = classPage.select("h1").text()
 
     val classData = classPage.select("div.article-content")
-    val classTable = classPage.select("table caption:matchesOwn(Table: ${name})").first()?.parent()
+    val classTable = classPage.select("table:has(caption:matchesOwn(Table: ${name}))").first()
 
     //Class features and level distribution
     classTable?.select("tbody tr td:eq(5)")?.forEach {
