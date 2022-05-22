@@ -5,9 +5,9 @@ import java.io.File
 const val PFSRD = "https://www.d20pfsrd.com"
 
 fun main(args: Array<String>) {
-    generateJson(collectRacesInfo(),"races",args.first())
+   // generateJson(collectRacesInfo(),"races",args.first())
     generateJson(collectClassesInfo(),"classes",args.first())
-    generateJson(collectFeatsInfo(),"feats",args.first())
+   // generateJson(collectFeatsInfo(),"feats",args.first())
 }
 
 private fun collectFeatsInfo():List<Feat> {

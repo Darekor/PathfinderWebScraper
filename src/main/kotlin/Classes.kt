@@ -26,7 +26,7 @@ data class PClass(
     val skillPoints: Int,
     val bab:BonusCategory,
     val saves: List<BonusCategory>,
-    val special: List<Map<String,ClassFeature>>,
+    val special: List<Map<String,Int>>,
     val classFeatures: List<ClassFeature>
 )
 
@@ -54,7 +54,7 @@ fun classFromPage(classPage: Document): PClass {
     var bab:BonusCategory = BonusCategory.FL
     val saves: MutableList<BonusCategory> = MutableList(3){BonusCategory.OT}
 
-    val special: MutableList<MutableMap<String,ClassFeature>> = mutableListOf()
+    val special: MutableList<MutableMap<String,Int>> = mutableListOf()
     val classFeatures: MutableList<ClassFeature> = mutableListOf()
 
     //Name
@@ -75,9 +75,9 @@ fun classFromPage(classPage: Document): PClass {
                         ftype = FeatureTypes.valueOf(it.groupValues[2].uppercase())
                     }
                     var dsc = ""
-                    classFeatures.find {
+                    classFeatures.find{
                         it.name == fname}
-                        ?.also{ special.last().put(fname,it)}
+                        ?.also{ special.last().put(fname,classFeatures.indexOf(it))}
                         ?:run{
                             var p = it.parent()!!.nextElementSibling()
                             while (p!=null && !p.tagName().matches("h\\d".toRegex())) {
@@ -86,7 +86,7 @@ fun classFromPage(classPage: Document): PClass {
                             }
                             val cf =ClassFeature(fname,dsc,ftype)
                             classFeatures.add(cf)
-                            special.last().put(fname,cf) }
+                            special.last().put(fname,classFeatures.size-1) }
                 }
             }
         }
