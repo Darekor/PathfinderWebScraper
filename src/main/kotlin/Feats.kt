@@ -1,5 +1,6 @@
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import java.util.stream.Collectors
 
 data class Feat(override val name:String,
                 val source:String?,
@@ -120,7 +121,7 @@ fun scrapeFeatPage(url: String) : List<Feat> {
                 element.select("tr td:first-of-type a")
                     .parallelStream()
                     .map{scrapeFeat(it.attr("href"))}
-                    .toList()
+                    .collect(Collectors.toList())
                     .mapNotNull { it }
             }.flatten()
     }

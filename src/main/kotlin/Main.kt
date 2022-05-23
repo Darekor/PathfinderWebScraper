@@ -4,10 +4,10 @@ import java.io.File
 
 const val PFSRD = "https://www.d20pfsrd.com"
 
-fun main(args: Array<String>) {
-   // generateJson(collectRacesInfo(),"races",args.first())
-    generateJson(collectClassesInfo(),"classes",args.first())
-   // generateJson(collectFeatsInfo(),"feats",args.first())
+fun main(args:Array<String>) {
+    generateJson(collectRacesInfo(),"races",args.firstOrNull())
+    generateJson(collectClassesInfo(),"classes",args.firstOrNull())
+    generateJson(collectFeatsInfo(),"feats",args.firstOrNull())
 }
 
 private fun collectFeatsInfo():List<Feat> {
@@ -31,9 +31,12 @@ private fun collectClassesInfo():List<PClass> {
         .mapNotNull{ scrapeClass(it.attr("href")) }
 }
 
-private fun <T> generateJson(list:List<T>,fname:String = "file",fpath:String? = "")
+private fun <T> generateJson(list:List<T>,fname:String = "file",fpath:String? = null)
 {
-    val filepath = fpath?:""
     val gBuilder = GsonBuilder().setPrettyPrinting().create()
-    File("$filepath\\$fname.json").writeText(gBuilder.toJson(list))
+    when (fpath)
+    {
+        null -> return File("$fname.json").writeText(gBuilder.toJson(list))
+        else -> return File("$fpath\\$fname.json").writeText(gBuilder.toJson(list))
+    }
 }
